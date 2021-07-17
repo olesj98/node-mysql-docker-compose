@@ -5,6 +5,7 @@ const {
 
 const router = Router();
 
-router.post('', addOrder);
+router.post('/buy', addOrder('BUY'));
+router.post('/sell', addOrder('SELL'));
 
 module.exports = router;

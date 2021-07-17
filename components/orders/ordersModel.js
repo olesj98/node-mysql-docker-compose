@@ -10,8 +10,11 @@ exports.findOne = async (id) => {
   return result;
 };
 
-exports.create = async (productId, amount, totalPrice) => {
-  const [{ insertId }] = await db.query('INSERT INTO orders(productId, amount, totalPrice) VALUES (?, ?, ?)', [productId, amount, totalPrice]);
+exports.create = async (productId, amount, totalPrice, orderType) => {
+  const [{ insertId }] = await db.query(
+    'INSERT INTO orders(productId, amount, totalPrice, orderType) VALUES (?, ?, ?, ?)',
+    [productId, amount, totalPrice, orderType],
+  );
   const [result] = await db.query('SELECT * FROM orders WHERE id=?', insertId);
   return result[0];
 };

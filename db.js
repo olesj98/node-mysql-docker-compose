@@ -11,7 +11,7 @@ const promisePool = pool.promise();
 
 // Create and populate a tables in the database if doesn't exist at application start
 (async function createTable() {
-  // const dropProductTable = 'DROP TABLE products';
+  // const dropProductTable = 'DROP TABLE orders';
 
   const tableProductsQuery = `CREATE TABLE IF NOT EXISTS products (
         id INT PRIMARY KEY AUTO_INCREMENT,
@@ -26,6 +26,7 @@ const promisePool = pool.promise();
         productId INT,
         amount INT,
         totalPrice DECIMAL(8,2) NOT NULL,
+        orderType VARCHAR(8),
         FOREIGN KEY (productId) REFERENCES products(id)
         )`;
 
