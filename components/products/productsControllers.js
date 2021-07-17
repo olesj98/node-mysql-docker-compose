@@ -2,7 +2,8 @@ const productModel = require('./productsModel');
 
 const getProducts = async (req, res) => {
   try {
-    const products = await productModel.findAll();
+    const { page } = req.query;
+    const products = await productModel.findAll(page);
     res.status(200).json(products);
   } catch (err) {
     res.status(500).json({ message: err.message });

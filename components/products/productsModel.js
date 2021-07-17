@@ -1,7 +1,9 @@
 const db = require('../../db');
+const { pagination } = require('../../utils/pagination');
 
-exports.findAll = async () => {
-  const [results] = await db.query('SELECT * FROM products');
+exports.findAll = async (page) => {
+  const { limit, offset } = pagination.getParams(page);
+  const [results] = await db.query(`SELECT * FROM products LIMIT ${limit} OFFSET ${offset}`);
   return results;
 };
 
