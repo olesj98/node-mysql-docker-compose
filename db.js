@@ -9,13 +9,25 @@ const pool = mysql.createPool({
 
 const promisePool = pool.promise();
 
-// Create and populate a table for products in the database if it doesn't exist at application start
+// Create and populate a tables in the database if doesn't exist at application start
 (async function createTable() {
-  const tableQuery = `CREATE TABLE IF NOT EXISTS products (
+  // const dropProductTable = 'DROP TABLE products';
+
+  const tableProductsQuery = `CREATE TABLE IF NOT EXISTS products (
         id INT PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(255) NOT NULL,
         price DECIMAL(8,2) NOT NULL,
-        description VARCHAR(255))`;
+        description VARCHAR(255),
+        available TINYINT DEFAULT 0
+        )`;
+
+  const tableOrdersQuery = `CREATE TABLE IF NOT EXISTS orders (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        productId INT,
+        amount INT,
+        totalPrice DECIMAL(8,2) NOT NULL,
+        FOREIGN KEY (productId) REFERENCES products(id)
+        )`;
 
   const tableData = `INSERT INTO products (
       name,
@@ -39,7 +51,9 @@ const promisePool = pool.promise();
           'test product nr.3'
       )`;
 
-  await promisePool.query(tableQuery);
+  // await promisePool.query(dropProductTable);
+  await promisePool.query(tableProductsQuery);
+  await promisePool.query(tableOrdersQuery);
   await promisePool.query(tableData);
 }());
 
