@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 app.use('/products', productsRouter);
-app.use('/order', requestValidator, ordersRouter);
+app.use('/orders', requestValidator, ordersRouter);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
